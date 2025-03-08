@@ -5,6 +5,7 @@ import dx_arr from './../../assets/arrow-next-svgrepo-com.svg';
 import sx_arr from './../../assets/arrow-prev-svgrepo-com.svg';
 import tick_icon from './../../assets/tick.png';
 import cross_icon from './../../assets/cross.png';
+import pending_icon from './../../assets/question-svgrepo-com (1).svg';
 
 const Home = () => {
   const [calendarDays, setCalendarDays] = useState([]);
@@ -89,6 +90,13 @@ const Home = () => {
         <h3>Challenges</h3>
         <ul>
             <li>
+                <img src={pending_icon} />
+                <div>
+                    <h4>Pending - 26/90 Days</h4>
+                </div>
+            </li>
+            <li>
+                
                 <div>
                     <img src={tick_icon} />
                     {/* <h4>💪</h4>
