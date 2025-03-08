@@ -30,10 +30,13 @@
     .navbar img {
         width: 25px;
         padding: 4px 20px;
-        border-radius: 100px;
+        border-radius: 12px;
+        filter: invert(38%) sepia(0%) saturate(100%) hue-rotate(148deg);
     }
 
     .navbar .active {
         background-color: #cee9e0;
+        filter: none;
+        filter: invert(0%) sepia(0%) saturate(100%);
     }
 }

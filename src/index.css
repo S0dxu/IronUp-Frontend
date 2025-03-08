@@ -78,3 +78,7 @@ body {
   font-family: "Raleway";
   background-color: #eff1ee;
 }
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
