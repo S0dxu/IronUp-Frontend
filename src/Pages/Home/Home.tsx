@@ -140,8 +140,9 @@ const Home: React.FC = () => {
               {openTaskIndex === index && (
                 <div className={`task-detail ${detailAnimation}`} ref={detailRef} onAnimationEnd={handleAnimationEnd}>
                   <button className="close-btn" onClick={closeTaskDetail}>
-                    <img src={close_icon} alt="close" />
+                    <img src={close_icon} />
                   </button>
+                  <img src={fire_icon} className="firebtn" />
                   <h4>{task.title}</h4>
                   <p>{task.detail}</p>
                   <button className="doit">
