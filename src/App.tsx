@@ -5,7 +5,7 @@ import Header from './Components/Header/Header';
 import Timer from './Pages/Timer/Timer';
 import Home from './Pages/Home/Home';
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <Header />
@@ -16,6 +16,6 @@ function App() {
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;

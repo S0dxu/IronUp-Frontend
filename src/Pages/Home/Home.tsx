@@ -5,58 +5,41 @@ import dx_arr from './../../assets/arrow-next-svgrepo-com.svg';
 import sx_arr from './../../assets/arrow-prev-svgrepo-com.svg';
 import tick_icon from './../../assets/tick.png';
 import cross_icon from './../../assets/cross.png';
-import pending_icon from './../../assets/question-svgrepo-com (1).svg';
+import pending_icon from './../../assets/question-svgrepo-com.svg';
 import daily_icon from './../../assets/calendar.png';
 import fire_icon from './../../assets/fire.png';
-import coin_icon from './../../assets/JD-09-512.webp';
+import coin_icon from './../../assets/JD-09-512.png';
 
-const Home = () => {
-  const [calendarDays, setCalendarDays] = useState([]);
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [today, setToday] = useState(new Date().getDate());
+const Home: React.FC = () => {
+  const [calendarDays, setCalendarDays] = useState<number[]>([]);
+  const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
+  const [today] = useState<number>(new Date().getDate());
 
-  const highlighted_days = ["1/3/2025", "2/3/2025", "3/3/2025", "4/3/2025", "5/3/2025", "6/3/2025", "7/3/2025", "8/3/2025", "10/2/2025"];
+  const highlighted_days: string[] = [
+    "1/3/2025", "2/3/2025", "3/3/2025", "4/3/2025", "5/3/2025", "6/3/2025", "7/3/2025", "8/3/2025", "10/2/2025"
+  ];
 
   useEffect(() => {
     const generateCalendar = () => {
-      const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-      const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
-
-      const daysInMonth = lastDayOfMonth.getDate();
-      
-      const daysArray = [];
-      for (let i = 1; i <= daysInMonth; i++) {
-        daysArray.push(i);
-      }
-
-      setCalendarDays(daysArray);
+      const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      setCalendarDays(Array.from({ length: lastDayOfMonth }, (_, i) => i + 1));
     };
-
     generateCalendar();
   }, [currentMonth, currentYear]);
 
   const handlePreviousMonth = () => {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
-    }
+    setCurrentMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth - 1));
+    if (currentMonth === 0) setCurrentYear((prevYear) => prevYear - 1);
   };
 
   const handleNextMonth = () => {
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
-    } else {
-      setCurrentMonth(currentMonth + 1);
-    }
+    setCurrentMonth((prevMonth) => (prevMonth === 11 ? 0 : prevMonth + 1));
+    if (currentMonth === 11) setCurrentYear((prevYear) => prevYear + 1);
   };
 
-  const isHighlighted = (day) => {
-    const date = `${day}/${currentMonth + 1}/${currentYear}`;
-    return highlighted_days.includes(date);
+  const isHighlighted = (day: number): boolean => {
+    return highlighted_days.includes(`${day}/${currentMonth + 1}/${currentYear}`);
   };
 
   return (

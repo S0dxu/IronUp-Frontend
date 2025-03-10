@@ -6,28 +6,28 @@ import timer_icon from './../../assets/ios-timer-4.png';
 import home_icon from './../../assets/home.svg';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const getActive = (path) => location.pathname === path ? "active" : "";
+    const getActive = (path: string): string => (location.pathname === path ? "active" : "");
 
     return (
         <div className='navbar'>
             <div onClick={() => navigate("/")}>
-                <img className={getActive("/")} src={home_icon} />
+                <img className={getActive("/")} src={home_icon} alt="Home" />
                 <span>Home</span>
             </div>
             <div onClick={() => navigate("/groups")}>
-                <img className={getActive("/groups")} src={group_icon}/>
+                <img className={getActive("/groups")} src={group_icon} alt="Groups" />
                 <span>Groups</span>
             </div>
             <div onClick={() => navigate("/ranking")}>
-                <img className={getActive("/ranking")} src={notes_icon} />
+                <img className={getActive("/ranking")} src={notes_icon} alt="Ranking" />
                 <span>Ranking</span>
             </div>
             <div onClick={() => navigate("/timer")}>
-                <img className={getActive("/timer")} src={timer_icon} />
+                <img className={getActive("/timer")} src={timer_icon} alt="Timer" />
                 <span>Timer</span>
             </div>
         </div>
