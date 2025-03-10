@@ -4,6 +4,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Header from './Components/Header/Header';
 import Timer from './Pages/Timer/Timer';
 import Home from './Pages/Home/Home';
+import Ranking from './Pages/Ranking/Ranking';
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/ranking" element={<Ranking />} />
         <Route path="/timer" element={<Timer />} />
       </Routes>
     </Router>

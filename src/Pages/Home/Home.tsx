@@ -72,7 +72,7 @@ const Home: React.FC = () => {
                 </li>
                 <li>
                     <img src={fire_icon} />
-                    <h4>Do 20 Dips - 100 <img src={coin_icon} /></h4>
+                    <h4>Do One Arm pushup - 100 <img src={coin_icon} /></h4>
                     <img className='arr' src={dx_arr} />
                 </li>
             </ul>

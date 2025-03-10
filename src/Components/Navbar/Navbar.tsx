@@ -19,15 +19,15 @@ const Navbar: React.FC = () => {
                 <span>Home</span>
             </div>
             <div onClick={() => navigate("/groups")}>
-                <img className={getActive("/groups")} src={group_icon} alt="Groups" />
+                <img className={getActive("/groups")} src={group_icon} />
                 <span>Groups</span>
             </div>
             <div onClick={() => navigate("/ranking")}>
-                <img className={getActive("/ranking")} src={notes_icon} alt="Ranking" />
-                <span>Ranking</span>
+                <img className={getActive("/ranking")} src={notes_icon} />
+                <span>{/* Ranking */}Leaderboard</span>
             </div>
             <div onClick={() => navigate("/timer")}>
-                <img className={getActive("/timer")} src={timer_icon} alt="Timer" />
+                <img className={getActive("/timer")} src={timer_icon} />
                 <span>Timer</span>
             </div>
         </div>
