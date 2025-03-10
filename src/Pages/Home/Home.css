@@ -167,6 +167,10 @@
     text-align: center;
 }
 
+.tasks li {
+    list-style: none;
+}
+
 .task-detail {
     background: #f9f9f9;
     position: absolute;
