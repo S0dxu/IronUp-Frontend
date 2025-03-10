@@ -16,7 +16,6 @@ const Home: React.FC = () => {
   const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
   const [today] = useState<number>(new Date().getDate());
-
   const highlighted_days: string[] = [
     "27/2/2025", "28/2/2025", "1/3/2025", "2/3/2025", "3/3/2025", "4/3/2025", "5/3/2025", "6/3/2025", "7/3/2025", "8/3/2025", "9/3/2025", "10/3/2025"
   ];
@@ -29,12 +28,34 @@ const Home: React.FC = () => {
     generateCalendar();
   }, [currentMonth, currentYear]);
 
+  const [openTaskIndex, setOpenTaskIndex] = useState<number | null>(null);
+  const [detailAnimation, setDetailAnimation] = useState<string>('');
+  const detailRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (detailRef.current && !detailRef.current.contains(e.target as Node)) {
+        if (openTaskIndex !== null && detailAnimation !== 'exit') {
+          setDetailAnimation('exit');
+        }
+      }
+    };
+    if (openTaskIndex !== null) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openTaskIndex, detailAnimation]);
+
   const handlePreviousMonth = () => {
+    if (openTaskIndex !== null) return;
     setCurrentMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth - 1));
     if (currentMonth === 0) setCurrentYear((prevYear) => prevYear - 1);
   };
 
   const handleNextMonth = () => {
+    if (openTaskIndex !== null) return;
     setCurrentMonth((prevMonth) => (prevMonth === 11 ? 0 : prevMonth + 1));
     if (currentMonth === 11) setCurrentYear((prevYear) => prevYear + 1);
   };
@@ -66,34 +87,14 @@ const Home: React.FC = () => {
     }
   ];
 
-  const [openTaskIndex, setOpenTaskIndex] = useState<number | null>(null);
-  const [detailAnimation, setDetailAnimation] = useState<string>('');
-  const detailRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (detailRef.current && !detailRef.current.contains(e.target as Node)) {
-        if (openTaskIndex !== null && detailAnimation !== 'exit') {
-          setDetailAnimation('exit');
-        }
-      }
-    };
-    if (openTaskIndex !== null) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [openTaskIndex, detailAnimation]);
-
   const handleTaskClick = (index: number) => {
-    if (openTaskIndex === index) return;
+    if (openTaskIndex !== null) return;
     setOpenTaskIndex(index);
     setDetailAnimation('enter');
   };
 
   const closeTaskDetail = (e?: React.MouseEvent) => {
-    if(e) e.stopPropagation();
+    if (e) e.stopPropagation();
     if (detailAnimation !== 'exit') {
       setDetailAnimation('exit');
     }
@@ -119,7 +120,6 @@ const Home: React.FC = () => {
         <p><span>🕗</span> <span>26/90</span> <span>Days</span></p>
         <p><span>🔥</span> <span>26</span> <span>Streak</span></p>
       </div>
-
       <div className="tasks">
         <h3>Tasks</h3>
         <ul>
@@ -138,10 +138,7 @@ const Home: React.FC = () => {
                   ref={detailRef}
                   onAnimationEnd={handleAnimationEnd}
                 >
-                  <button
-                    className="close-btn"
-                    onClick={closeTaskDetail}
-                  >
+                  <button className="close-btn" onClick={closeTaskDetail}>
                     <img src={close_icon} alt="close" />
                   </button>
                   <h4>{task.title}</h4>
@@ -155,7 +152,6 @@ const Home: React.FC = () => {
           ))}
         </ul>
       </div>
-
       <div className="calend">
         <h3>Calendar</h3>
         <div className="calendar-navigation">
@@ -174,7 +170,6 @@ const Home: React.FC = () => {
           ))}
         </div>
       </div>
-
       <div className="challe">
         <h3>Challenges</h3>
         <ul>
