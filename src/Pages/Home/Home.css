@@ -183,11 +183,11 @@
 }
   
 .task-detail.enter {
-    animation: moveDown 0.2s ease;
+    animation: moveDown 0.3s forwards;
 }
   
 .task-detail.exit {
-    animation: moveUp 0.2s ease;
+    animation: moveUp 0.3s forwards;
 }
 
 @keyframes moveUp {
