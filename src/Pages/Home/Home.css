@@ -139,7 +139,7 @@
     padding: 5px;
 }
 
-.tasks ul li {
+.tasks div {
     display: flex;
     gap: 10px;
     border: 1px solid #cee9e0;
@@ -147,6 +147,106 @@
     padding: 5px;
     height: 22px;
     align-items: center;
+}
+
+.tasks .task-detail {
+    background: #f9f9f9;
+    position: fixed;
+    width: calc(100% - 12px);
+    height: 400px;
+    z-index: 100;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0px;
+    display: flex;
+    /* border-top-left-radius: 100% 10px;
+    border-top-right-radius: 100% 10px; */
+    flex-direction: column;
+    border: none;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+}
+
+.task-detail {
+    background: #f9f9f9;
+    position: absolute;
+    width: 100vw;
+    height: 250px !important;
+    bottom: 0;
+    padding: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+  
+.task-detail.enter {
+    animation: moveDown 0.2s ease;
+}
+  
+.task-detail.exit {
+    animation: moveUp 0.2s ease;
+}
+
+@keyframes moveUp {
+    from {
+      transform: translateX(-50%) translateY(0);
+    }
+    to {
+      transform: translateX(-50%) translateY(100%);
+    }
+}
+  
+@keyframes moveDown {
+    from {
+      transform: translateX(-50%) translateY(100%);
+    }
+    to {
+      transform: translateX(-50%) translateY(0);
+    }
+}
+  
+
+.tasks .task-detail .doit {
+    width: calc(100% - 10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cee9e0;
+    border-radius: 12px;
+    height: 40px;
+    border: none;
+    font-family: "Raleway";
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+}
+
+.tasks .task-detail h4 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.tasks .task-detail p {
+    font-size: 15px;
+    font-weight: 400;
+    padding: 10px;
+}
+
+.tasks .task-detail .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    border: transparent;
+}
+
+.tasks .task-detail .close-btn img {
+    width: 12px;
+    height: 12px;
+    object-fit: cover;
 }
 
 .tasks .dail {
