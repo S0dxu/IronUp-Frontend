@@ -87,7 +87,10 @@
         width: 100%;
         align-items: center;
         justify-content: space-around;
+        border-bottom-left-radius: 100% 10px;
+        border-bottom-right-radius: 100% 10px;
     }
+    
 
     .ranking .lead li {
         list-style: none;
