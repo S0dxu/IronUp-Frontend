@@ -21,16 +21,21 @@ const Home: React.FC = () => {
   ];
 
   useEffect(() => {
-    const generateCalendar = () => {
-      const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-      setCalendarDays(Array.from({ length: lastDayOfMonth }, (_, i) => i + 1));
-    };
-    generateCalendar();
+    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    setCalendarDays(Array.from({ length: lastDayOfMonth }, (_, i) => i + 1));
   }, [currentMonth, currentYear]);
 
   const [openTaskIndex, setOpenTaskIndex] = useState<number | null>(null);
   const [detailAnimation, setDetailAnimation] = useState<string>('');
   const detailRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (openTaskIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [openTaskIndex]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -133,11 +138,7 @@ const Home: React.FC = () => {
                 <img className='arr' src={dx_arr} alt="arrow" />
               </div>
               {openTaskIndex === index && (
-                <div
-                  className={`task-detail ${detailAnimation}`}
-                  ref={detailRef}
-                  onAnimationEnd={handleAnimationEnd}
-                >
+                <div className={`task-detail ${detailAnimation}`} ref={detailRef} onAnimationEnd={handleAnimationEnd}>
                   <button className="close-btn" onClick={closeTaskDetail}>
                     <img src={close_icon} alt="close" />
                   </button>
