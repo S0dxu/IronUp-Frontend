@@ -1,0 +1,57 @@
+.register {
+    height: 100dvh;
+    width: 100dvw;
+    z-index: 101;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.register .form-group {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 40px);
+}
+
+.register img {
+    width: 80px;
+    margin-bottom: 40px;
+}
+
+.register a {
+    color: #d38900;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.register .form-group input {
+    padding: 12px 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #dbdbdb;
+    font-family: "Raleway";
+    outline: none;
+    background-color: #f1f1f1;
+}
+
+.register button {
+    padding: 12px 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background: #ffa401;
+    width: calc(100vw - 40px);
+    outline: none;
+    font-family: "Raleway";
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+}

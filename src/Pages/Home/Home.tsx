@@ -20,6 +20,8 @@ const Home: React.FC = () => {
     "27/2/2025", "28/2/2025", "1/3/2025", "2/3/2025", "3/3/2025", "4/3/2025", "5/3/2025", "6/3/2025", "7/3/2025", "8/3/2025", "9/3/2025", "10/3/2025"
   ];
 
+  const username: string | null = localStorage.getItem('username');
+
   useEffect(() => {
     const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     setCalendarDays(Array.from({ length: lastDayOfMonth }, (_, i) => i + 1));
@@ -114,7 +116,7 @@ const Home: React.FC = () => {
 
   return (
     <div className='home'>
-      <h2>Giorgio</h2>
+      <h2>{username}</h2>
       <img
         src="https://st3.depositphotos.com/13194036/32532/i/450/depositphotos_325320602-stock-photo-sexy-muscular-bodybuilder-bare-torso.jpg"
         className='profile-pic'

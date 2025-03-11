@@ -40,7 +40,6 @@ const Ranking: React.FC = () => {
             <li>
                 <div>
                     <h1>1</h1>
-                    {/* <img src={crown_icon} className='crown' /> */}
                     <img src="https://st3.depositphotos.com/13194036/32532/i/450/depositphotos_325320602-stock-photo-sexy-muscular-bodybuilder-bare-torso.jpg" />
                     <p>Giorgio</p>
                 </div>
@@ -92,3 +91,112 @@ const Ranking: React.FC = () => {
 };
 
 export default Ranking;
+
+
+
+/* import React, { useState } from 'react';
+import './Ranking.css';
+
+const Ranking: React.FC = () => {
+    const username = localStorage.getItem('username');
+    const [groupId, setGroupId] = useState('');
+    const [exercise, setExercise] = useState('Push Ups');
+    const [days, setDays] = useState(15);
+    const [messageC, setMessageC] = useState("")
+    const [messageJ, setMessageJ] = useState("")
+
+    const createGroup = async () => {
+        try {
+            if (days >= 90){
+                setMessageC("The challenge must be between 15 and 90 days")
+                return
+            }
+            const response = await fetch("https://iron-back.onrender.com/create-group", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, exercise, days })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert(`ID: ${data.groupId}`);
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            setMessageC("Server error");
+        }
+    };
+
+    const joinGroup = async () => {
+        if (!groupId) return setMessageJ("Please enter a valid Group ID");
+
+        try {
+            const response = await fetch("https://iron-back.onrender.com/join-group", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ groupId, username })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setMessageJ("Joined");
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            setMessageJ("Server error");
+        }
+    };
+
+    return (
+        <div className="ranking">
+            <h3>Groups</h3>
+            <div className="group-options">
+                <label>
+                Exercise
+                    <select value={exercise} onChange={(e) => setExercise(e.target.value)}>
+                        <option value="Push Ups">Push Ups</option>
+                        <option value="Pull Ups">Pull Ups</option>
+                        <option value="Dips">Dips</option>
+                    </select>
+                </label>
+
+                <label>
+                Duration (days)
+                    <input 
+                        type="number" 
+                        value={days} 
+                        min="15" 
+                        max="90" 
+                        onChange={(e) => setDays(Number(e.target.value))} 
+                    />
+                </label>
+                {messageC}
+                <button onClick={createGroup}>Create Group</button>
+            </div>
+
+            <div className="group-options">
+                <div className='or'>
+                    <hr />
+                    <p>OR</p>
+                    <hr />
+                </div>
+                <div className="join-group">
+                    <input 
+                        type="text" 
+                        placeholder="Inserisci Group ID" 
+                        value={groupId} 
+                        onChange={(e) => setGroupId(e.target.value)} 
+                    />
+                    {messageJ}
+                    <button onClick={joinGroup}>Enter</button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Ranking;
+
+ */

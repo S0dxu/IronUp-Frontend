@@ -1,0 +1,9 @@
+.login {
+    background-color: rgba(255, 0, 0, 0.473);
+    height: 100dvh;
+    width: 100dvw;
+    z-index: 101;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
