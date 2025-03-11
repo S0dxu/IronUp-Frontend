@@ -80,7 +80,7 @@ const Ranking: React.FC = () => {
             </li>
             <li>
                 <div>
-                    <h1>5</h1>
+                    <h1>6</h1>
                     <img src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0zMjgtMzY2LXRvbmctMDhfMS5qcGc.jpg" />
                     <p>Leonardo</p>
                 </div>
