@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import group_icon from './../../assets/group-people.png';
+import group_icon from './../../assets/settings-svgrepo-com.svg';
 import notes_icon from './../../assets/notes-icon.png';
 import timer_icon from './../../assets/ios-timer-4.png';
 import home_icon from './../../assets/home.svg';
@@ -18,10 +18,6 @@ const Navbar: React.FC = () => {
                 <img className={getActive("/")} src={home_icon} alt="Home" />
                 <span>Home</span>
             </div>
-            <div onClick={() => navigate("/groups")}>
-                <img className={getActive("/groups")} src={group_icon} />
-                <span>Groups</span>
-            </div>
             <div onClick={() => navigate("/ranking")}>
                 <img className={getActive("/ranking")} src={notes_icon} />
                 <span>{/* Ranking */}Leaderboard</span>
@@ -29,6 +25,10 @@ const Navbar: React.FC = () => {
             <div onClick={() => navigate("/timer")}>
                 <img className={getActive("/timer")} src={timer_icon} />
                 <span>Timer</span>
+            </div>
+            <div onClick={() => navigate("/settings")}>
+                <img className={getActive("/settings")} src={group_icon} />
+                <span>Settings</span>
             </div>
         </div>
     );

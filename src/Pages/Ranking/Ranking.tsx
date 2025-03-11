@@ -40,7 +40,7 @@ const Ranking: React.FC = () => {
             <li>
                 <div>
                     <h1>1</h1>
-                    <img src={crown_icon} className='crown' />
+                    {/* <img src={crown_icon} className='crown' /> */}
                     <img src="https://st3.depositphotos.com/13194036/32532/i/450/depositphotos_325320602-stock-photo-sexy-muscular-bodybuilder-bare-torso.jpg" />
                     <p>Giorgio</p>
                 </div>
@@ -80,7 +80,7 @@ const Ranking: React.FC = () => {
             </li>
             <li>
                 <div>
-                    <h1>5</h1>
+                    <h1>6</h1>
                     <img src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0zMjgtMzY2LXRvbmctMDhfMS5qcGc.jpg" />
                     <p>Leonardo</p>
                 </div>

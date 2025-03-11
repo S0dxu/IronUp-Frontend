@@ -5,6 +5,7 @@ import Header from './Components/Header/Header';
 import Timer from './Pages/Timer/Timer';
 import Home from './Pages/Home/Home';
 import Ranking from './Pages/Ranking/Ranking';
+import Settings from './Pages/Settings/Settings';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/timer" element={<Timer />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
   );
