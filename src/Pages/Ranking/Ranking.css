@@ -44,6 +44,7 @@
         border-radius: 100%;
         top: 0;
         left: 55px;
+        display:none;
     }
 
     .ranking ul li h1 {
