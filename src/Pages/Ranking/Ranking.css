@@ -22,13 +22,51 @@
     .ranking ul li {
         list-style-type: none;
         margin: 10px;
-        padding: 5px 15px;
+        padding: 2px 15px;
         border-radius: 12px;
         background-color: #fff;
         display: flex;
         align-items: center;
         justify-content: space-between;
         box-shadow: 0 2px 4px 0px #dadada70;
+    }
+
+    .ranking h4 {
+        margin: 0;
+        margin-top: -30px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .ranking h4  img {
+        width: 26px;
+    }
+
+    .ranking .hiddiv {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        padding: 10px;
+        top: 60px;
+        right: 10px;
+        box-shadow: 0 0 1px 1px #dadada70;
+        border-radius: 12px;    
+    }
+
+    .ranking .hiddiv  hr {
+        width: 100%;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .ranking .hiddiv button {
+        background-color: transparent;
+        border: none;
+        font-family: "Raleway";
     }
 
     .ranking ul li div {
@@ -93,6 +131,9 @@
         border-bottom-right-radius: 100% 10px;
     }
     
+    .ranking .group-members {
+        width: 100%;
+    }
 
     .ranking .lead li {
         list-style: none;

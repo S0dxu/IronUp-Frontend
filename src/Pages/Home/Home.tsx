@@ -13,14 +13,24 @@ import close_icon from './../../assets/75519.png';
 
 const Home: React.FC = () => {
   const [calendarDays, setCalendarDays] = useState<number[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
   const [today] = useState<number>(new Date().getDate());
-  const highlighted_days: string[] = [
+  const [taskDone, setTaskDone] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [avatar, setAvatar] = useState<string>("");
+  const token: string | null = localStorage.getItem('token');
+  /* const highlighted_days: string[] = [
     "27/2/2025", "28/2/2025", "1/3/2025", "2/3/2025", "3/3/2025", "4/3/2025", "5/3/2025", "6/3/2025", "7/3/2025", "8/3/2025", "9/3/2025", "10/3/2025"
-  ];
+  ]; */
 
-  const username: string | null = localStorage.getItem('username');
+  const [groupExercise, setGroupExercise] = useState<string>('');
+  const [daysLeft, setDaysLeft] = useState<number>();
+  let [totalDays, setTotalDays] = useState<number>();
+  const [history, setHistory] = useState<string[]>([]);
+  
+  const daysDifference = (totalDays || 0) - (daysLeft || 0);
 
   useEffect(() => {
     const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -68,15 +78,21 @@ const Home: React.FC = () => {
   };
 
   const isHighlighted = (day: number): boolean => {
-    return highlighted_days.includes(`${day}/${currentMonth + 1}/${currentYear}`);
+    return history.includes(`${day}/${currentMonth + 1}/${currentYear}`);
   };
+
+  const claimReward = () => {
+    history.push(`${today}/${currentMonth + 1}/${currentYear}`);
+    setTaskDone(true)
+    closeTaskDetail();
+  }
 
   const tasksData = [
     {
-      title: "26 Pushups",
+      title: `${daysDifference} ${groupExercise}`,
       reward: 500,
-      detail: "Perform 26 push-ups in one set without ever lifting your feet off the ground; you can take your hands off the ground."
-    },
+      detail: `Perform ${daysDifference} ${groupExercise} in one set without ever lifting your feet off the ground; you can take your hands off the ground.`
+    }/* ,
     {
       title: "20 Dips",
       reward: 250,
@@ -91,7 +107,7 @@ const Home: React.FC = () => {
       title: "One Arm Pushup",
       reward: 100,
       detail: "Try a one-arm pushup, focusing on balance and control."
-    }
+    } */
   ];
 
   const handleTaskClick = (index: number) => {
@@ -114,31 +130,101 @@ const Home: React.FC = () => {
     }
   };
 
+  const getUser = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`https://iron-back.onrender.com/user/${token}`);
+      const data = await response.json();
+  
+      if (response.ok) {
+        setUsername(data.username);
+        setAvatar(data.avatar);
+      }
+    } catch (error) {
+      console.error("Errore nel recupero del gruppo:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUserData = async () => {
+    try {
+        setLoading(true);
+        const userResponse = await fetch(`https://iron-back.onrender.com/user/${token}`);
+        const userData = await userResponse.json();
+  
+        const groupResponse = await fetch(`https://iron-back.onrender.com/user-group/${userData.username}`);
+        const groupData = await groupResponse.json();
+  
+        if (userResponse.ok && groupResponse.ok) {
+            setGroupExercise(groupData.exercise);
+            setDaysLeft(groupData.daysLeft);
+            setTotalDays(groupData.totals);
+            setHistory(groupData.history);
+        }
+      } catch (error) {
+          console.error("Errore nel recupero dei dati:", error);
+      } finally {
+          setLoading(false);
+      }
+    };
+        
+      useEffect(() => {
+          getUserData();
+      }, []);
+
+  if (loading) {
+    return <div className="home"></div>;
+  }
+
+  /* useEffect(() => {
+    if (!taskDone && totalDays || 0 > 0) {
+      totalDays += 1;
+    }
+  }) */
+
+  const startDaysLeft = (totalDays || 0) - (daysLeft || 0);
+  const sum = (startDaysLeft * (startDaysLeft + 1)) / 2;
+
   return (
     <div className='home'>
       <h2>{username}</h2>
       <img
-        src="https://st3.depositphotos.com/13194036/32532/i/450/depositphotos_325320602-stock-photo-sexy-muscular-bodybuilder-bare-torso.jpg"
+        src={avatar}
         className='profile-pic'
         alt="Profile"
       />
       <div className="stats">
-        <p><span>💪</span> <span>351</span> <span>Done</span></p>
-        <p><span>🕗</span> <span>26/90</span> <span>Days</span></p>
-        <p><span>🔥</span> <span>26</span> <span>Streak</span></p>
+        <p><span>💪</span> <span>{sum}</span> <span>Done</span></p>
+        <p><span>🕗</span> <span>{daysDifference || 0}/{totalDays || 0}</span> <span>Days</span></p>
+        <p><span>🔥</span> <span>{(totalDays || 0) - (daysLeft || 0)}</span> <span>Streak</span></p>
       </div>
       <div className="tasks">
-        <h3>Tasks</h3>
+        {!taskDone && (<h3>Tasks</h3>)}
         <ul>
           {tasksData.map((task, index) => (
             <li key={index} onClick={() => handleTaskClick(index)}>
-              <div className="task-summary">
-                <img src={fire_icon} alt="task icon" />
-                <h4>
-                  Do {task.title} - {task.reward} <img src={coin_icon} alt="coin" />
-                </h4>
-                <img className='arr' src={dx_arr} alt="arrow" />
-              </div>
+              {!taskDone && (
+                <div className="task-summary">
+                  <img src={fire_icon} alt="task icon" />
+                  <h4>
+                    Do {task.title} - {task.reward} <img src={coin_icon} alt="coin" />
+                  </h4>
+                  <img className='arr' src={dx_arr} alt="arrow" />
+                </div>
+              )}
+              {taskDone && (
+                <div className={`task-summary goaway-animation`}>
+                  <img src={fire_icon} alt="task icon" />
+                  <h4>
+                    Completed: {task.title} - {task.reward} <img src={coin_icon} alt="coin" />
+                  </h4>
+                </div>
+              )}
               {openTaskIndex === index && (
                 <div className={`task-detail ${detailAnimation}`} ref={detailRef} onAnimationEnd={handleAnimationEnd}>
                   <button className="close-btn" onClick={closeTaskDetail}>
@@ -147,7 +233,7 @@ const Home: React.FC = () => {
                   <img src={fire_icon} className="firebtn" />
                   <h4>{task.title}</h4>
                   <p>{task.detail}</p>
-                  <button className="doit">
+                  <button className="doit"  onClick={claimReward}>
                     Claim your Reward of {task.reward} <img src={coin_icon} alt="coin" />
                   </button>
                 </div>
@@ -174,7 +260,7 @@ const Home: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="challe">
+      {/* <div className="challe">
         <h3>Challenges</h3>
         <ul>
           <li>
@@ -220,7 +306,7 @@ const Home: React.FC = () => {
             </div>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

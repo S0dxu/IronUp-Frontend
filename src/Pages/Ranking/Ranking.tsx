@@ -1,202 +1,305 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Ranking.css';
-import dots from './../../assets/427221-200.png'
+import dots from './../../assets/427221-200.png';
 import coin_icon from './../../assets/JD-09-512.png';
 import crown_icon from './../../assets/crown.png';
 import crown2_icon from './../../assets/2385856.png';
+import cale_icon from './../../assets/calendar-249.png';
 
 const Ranking: React.FC = () => {
-  return (
-    <div className='ranking'>
-        <div>
-            <h3>Push Ups</h3>
-            <img src={dots} className="dots" />
-        </div>
-        <div className='lead'>
-            <li>
-                <div>
-                    <img src="https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg" />
-                    <h1>2</h1>
-                    <p>Marco</p>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <img src={crown2_icon} className='crown2' />
-                    <img src="https://st3.depositphotos.com/13194036/32532/i/450/depositphotos_325320602-stock-photo-sexy-muscular-bodybuilder-bare-torso.jpg" />
-                    <h1>1</h1>
-                    <p>Giorgio</p>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <img src="https://img.freepik.com/foto-gratuito/giovane-uomo-barbuto-con-camicia-a-righe_273609-5677.jpg" />
-                    <h1>2</h1>
-                    <p>Luca</p>
-                </div>
-            </li>
-        </div>
-        <ul>
-            <li>
-                <div>
-                    <h1>1</h1>
-                    <img src="https://st3.depositphotos.com/13194036/32532/i/450/depositphotos_325320602-stock-photo-sexy-muscular-bodybuilder-bare-torso.jpg" />
-                    <p>Giorgio</p>
-                </div>
-                <span>950 <img src={coin_icon} /></span>
-            </li>
-            <li>
-                <div>
-                    <h1>2</h1>
-                    <img src="https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg" />
-                    <p>Marco</p>
-                </div>
-                <span>900 <img src={coin_icon} /></span>
-            </li>
-            <li>
-                <div>
-                    <h1>3</h1>
-                    <img src="https://img.freepik.com/foto-gratuito/giovane-uomo-barbuto-con-camicia-a-righe_273609-5677.jpg" />
-                    <p>Luca</p>
-                </div>
-                <span>800 <img src={coin_icon} /></span>
-            </li>
-            <li>
-                <div>
-                    <h1>4</h1>
-                    <img src="https://img.freepik.com/premium-photo/handsome-man-isolated-wall-pointing-side-present-product_1368-93857.jpg?semt=ais_hybrid" />
-                    <p>Davide</p>
-                </div>
-                <span>350 <img src={coin_icon} /></span>
-            </li>
-            <li>
-                <div>
-                    <h1>5</h1>
-                    <img src="https://plus.unsplash.com/premium_photo-1682096259050-361e2989706d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8eW91bmclMjBtYW58ZW58MHx8MHx8fDA%3D" />
-                    <p>Matteo</p>
-                </div>
-                <span>150 <img src={coin_icon} /></span>
-            </li>
-            <li>
-                <div>
-                    <h1>6</h1>
-                    <img src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0zMjgtMzY2LXRvbmctMDhfMS5qcGc.jpg" />
-                    <p>Leonardo</p>
-                </div>
-                <span>50 <img src={coin_icon} /></span>
-            </li>
-        </ul>
-    </div>
-  );
-};
+    const token: string | null = localStorage.getItem('token');
+    interface Member {
+        username: string;
+        avatar: string;
+        coin: number | 0;
+    }
 
-export default Ranking;
+    const [loading, setLoading] = useState<boolean>(true);
+    const [currentGroup, setCurrentGroup] = useState<string>('');
+    const [groupExercise, setGroupExercise] = useState<string>('');
+    const [joinInput, setJoinInput] = useState<string>('');
+    const [exercise, setExercise] = useState<string>('Push Ups');
+    const [days, setDays] = useState<number>(15);
+    const [daysLeft, setDaysLeft] = useState<number>();
+    const [totalDays, setTotalDays] = useState<number>();
+    const [messageC, setMessageC] = useState<string>("");
+    const [messageJ, setMessageJ] = useState<string>("");
+    const [username, setUsername] = useState<string>('');
+    const [avatar, setAvatar] = useState<string>('');
+    const [groupMembers, setGroupMembers] = useState<Member[]>([]);
+    const [showHidden, setShowHidden] = useState<boolean>(false);
+    const hiddenRef = useRef<HTMLDivElement>(null);
 
-
-
-/* import React, { useState } from 'react';
-import './Ranking.css';
-
-const Ranking: React.FC = () => {
-    const username = localStorage.getItem('username');
-    const [groupId, setGroupId] = useState('');
-    const [exercise, setExercise] = useState('Push Ups');
-    const [days, setDays] = useState(15);
-    const [messageC, setMessageC] = useState("")
-    const [messageJ, setMessageJ] = useState("")
-
-    const createGroup = async () => {
+    const getUserData = async () => {
         try {
-            if (days >= 90){
-                setMessageC("The challenge must be between 15 and 90 days")
-                return
-            }
-            const response = await fetch("https://iron-back.onrender.com/create-group", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, exercise, days })
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                alert(`ID: ${data.groupId}`);
+            setLoading(true);
+            const userResponse = await fetch(`https://iron-back.onrender.com/user/${token}`);
+            const userData = await userResponse.json();
+      
+            const groupResponse = await fetch(`https://iron-back.onrender.com/user-group/${userData.username}`);
+            const groupData = await groupResponse.json();
+      
+            if (userResponse.ok && groupResponse.ok) {
+                setUsername(userData.username);
+                setAvatar(userData.avatar);
+                setCurrentGroup(groupData.groupId);
+                setGroupMembers(groupData.members);
+                setGroupExercise(groupData.exercise);
+                setDaysLeft(groupData.daysLeft);
+                setTotalDays(groupData.totals);
             } else {
-                alert(data.message);
+                setMessageJ("Error retrieving data");
             }
         } catch (error) {
-            setMessageC("Server error");
+            console.error("Errore nel recupero dei dati:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    useEffect(() => {
+        getUserData();
+    }, []);
+    
+    const createGroup = async () => {
+        try {
+        if (days < 15 || days > 90) {
+            setMessageC("The challenge must be between 15 and 90 days");
+            return;
+        }
+        const response = await fetch("https://iron-back.onrender.com/create-group", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, exercise, days })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            alert(`Group created. ID: ${data.groupId}`);
+            setCurrentGroup(data.groupId);
+            setGroupExercise(exercise);
+        } else {
+            alert(data.message);
+        }
+        } catch (error) {
+        setMessageC("Server error");
         }
     };
 
     const joinGroup = async () => {
-        if (!groupId) return setMessageJ("Please enter a valid Group ID");
-
+        if (!joinInput) {
+        setMessageJ("Please enter a valid Group ID");
+        return;
+        }
         try {
-            const response = await fetch("https://iron-back.onrender.com/join-group", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ groupId, username })
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                setMessageJ("Joined");
-            } else {
-                alert(data.message);
-            }
+        const response = await fetch("https://iron-back.onrender.com/join-group", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ groupId: joinInput, username })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            setMessageJ("Joined successfully!");
+            setCurrentGroup(joinInput);
+        } else {
+            alert(data.message);
+        }
         } catch (error) {
-            setMessageJ("Server error");
+        setMessageJ("Server error");
         }
     };
 
-    return (
+    const leaveGroup = async () => {
+        try {
+        const response = await fetch("https://iron-back.onrender.com/leave-group", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            setCurrentGroup('');
+            setGroupMembers([]);
+            setGroupExercise('');
+            setJoinInput('');
+            toggleHidden()
+        } else {
+            alert(data.message);
+        }
+        } catch (error) {
+        setMessageJ("Server error");
+        }
+    };
+
+    const toggleHidden = () => {
+        setShowHidden(prev => !prev);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+        if (hiddenRef.current && !hiddenRef.current.contains(event.target as Node)) {
+            setShowHidden(false);
+        }
+        };
+
+        if (showHidden) {
+        document.addEventListener('mousedown', handleClickOutside);
+        } else {
+        document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showHidden]);
+
+    const copyGroupId = () => {
+        if (currentGroup) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(currentGroup)
+            .then(() => {
+                alert("Group ID copiato negli appunti!");
+            })
+            .catch((err) => {
+                console.error("Errore durante la copia del Group ID:", err);
+            });
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = currentGroup;
+            textArea.style.position = "fixed";
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.width = "2em";
+            textArea.style.height = "2em";
+            textArea.style.padding = "0";
+            textArea.style.border = "none";
+            textArea.style.outline = "none";
+            textArea.style.boxShadow = "none";
+            textArea.style.background = "transparent";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                console.log("Group ID copiato:", currentGroup);
+                alert("Group ID copiato negli appunti!");
+            } else {
+                console.error("Errore: comando copy non riuscito");
+            }
+            } catch (err) {
+            console.error("Errore durante la copia del Group ID:", err);
+            }
+            document.body.removeChild(textArea);
+        }
+        }
+        toggleHidden();
+    };
+    
+
+    if (loading) {
+        return <div className="ranking"></div>;
+    } 
+
+  return (
         <div className="ranking">
+        {currentGroup ? (
+            <>
+            <h3>{groupExercise}</h3>
+            <img src={dots} onClick={toggleHidden} className="dots" />
+            {showHidden && (
+                <div ref={hiddenRef} className="hiddiv">
+                <button onClick={copyGroupId}>Copy Group ID</button>
+                <hr />
+                <button onClick={leaveGroup}>Leave Group</button>
+                </div>
+            )}
+            <div className='lead'>
+                {groupMembers
+                    .sort((a, b) => b.coin - a.coin)
+                    .slice(0, 3)
+                    .map((member, index) => {
+                        const orderedMembers = [groupMembers[1], groupMembers[0], groupMembers[2]];
+                        return (
+                            <li key={index}>
+                                <div>
+                                    {index === 1 && <img src={crown2_icon} className='crown2'/>}
+                                    {orderedMembers[index] && <img src={orderedMembers[index].avatar} />}
+                                    <h1>{index === 0 ? 2 : index === 1 ? 1 : 3}</h1>
+                                    <p>{orderedMembers[index]?.username}</p>
+                                </div>
+                            </li>
+                        );
+                    })
+                }
+            </div>
+            <h4>{(totalDays || 0) - (daysLeft || 0)}/{totalDays || 0} <img src={cale_icon} /></h4>
+            </>
+        ) : (
+            <></>
+        )}
+        {!currentGroup ? (
+            <div>
             <h3>Groups</h3>
             <div className="group-options">
                 <label>
                 Exercise
-                    <select value={exercise} onChange={(e) => setExercise(e.target.value)}>
-                        <option value="Push Ups">Push Ups</option>
-                        <option value="Pull Ups">Pull Ups</option>
-                        <option value="Dips">Dips</option>
-                    </select>
+                <select value={exercise} onChange={(e) => setExercise(e.target.value)}>
+                    <option value="Push Ups">Push Ups</option>
+                    <option value="Pull Ups">Pull Ups</option>
+                    <option value="Dips">Dips</option>
+                </select>
                 </label>
-
                 <label>
                 Duration (days)
-                    <input 
-                        type="number" 
-                        value={days} 
-                        min="15" 
-                        max="90" 
-                        onChange={(e) => setDays(Number(e.target.value))} 
-                    />
+                <input 
+                    type="number"
+                    value={days}
+                    min="15"
+                    max="90"
+                    onChange={(e) => setDays(Number(e.target.value))}
+                />
                 </label>
-                {messageC}
+                {messageC && <p className="message">{messageC}</p>}
                 <button onClick={createGroup}>Create Group</button>
             </div>
-
             <div className="group-options">
-                <div className='or'>
-                    <hr />
-                    <p>OR</p>
-                    <hr />
+                <div className="or">
+                <hr />
+                <p>OR</p>
+                <hr />
                 </div>
                 <div className="join-group">
-                    <input 
-                        type="text" 
-                        placeholder="Inserisci Group ID" 
-                        value={groupId} 
-                        onChange={(e) => setGroupId(e.target.value)} 
-                    />
-                    {messageJ}
-                    <button onClick={joinGroup}>Enter</button>
+                <input 
+                    type="text"
+                    placeholder="Enter Group ID"
+                    value={joinInput}
+                    onChange={(e) => setJoinInput(e.target.value)}
+                />
+                {messageJ && <p className="message">{messageJ}</p>}
+                <button onClick={joinGroup}>Join Group</button>
                 </div>
             </div>
+            </div>
+        ) : (
+            <div className="group-members">
+            <ul>
+                {groupMembers
+                .sort((a, b) => b.coin - a.coin)
+                .map((member, index) => (
+                    <li key={index}>
+                        <div>
+                            <h1>{index + 1}</h1>
+                            <img src={member.avatar} alt={member.username} />
+                            <p>{member.username}</p>
+                        </div>
+                        <span>{member.coin} <img src={coin_icon} alt="coin" /></span>
+                    </li>
+                ))}
+            </ul>
+            </div>
+        )}
         </div>
     );
 };
 
 export default Ranking;
-
- */

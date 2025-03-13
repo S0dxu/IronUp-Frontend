@@ -105,6 +105,22 @@
     border: 1px solid #ffb325;
 }
 
+.goaway-animation {
+    animation: goaway 1s forwards;
+}
+
+@keyframes goaway {
+    0% {
+        transform: translateX(0);
+    }
+    30% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 .calendar-day:hover {
     cursor: pointer;
     background-color: #e0e0e0;

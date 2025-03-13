@@ -27,6 +27,7 @@
     color: #d38900;
     text-decoration: none;
     font-size: 16px;
+    cursor: pointer;
     margin-top: 10px;
     font-weight: 600;
 }
@@ -42,6 +43,26 @@
     background-color: #f1f1f1;
 }
 
+.register .avatars {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.register .avatars img {
+    width: calc((100vw - 160px) / 4);
+    height: calc((100vw - 160px) / 4);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out;
+    border: 3px solid transparent;
+}
+
+.register .avatars img.selected {
+    border: 3px solid #ffa401;
+}
+
 .register button {
     padding: 12px 10px;
     border: none;
@@ -53,5 +74,4 @@
     font-family: "Raleway";
     font-size: 16px;
     font-weight: 600;
-    margin-top: 10px;
 }

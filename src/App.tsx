@@ -34,12 +34,10 @@ function AuthHandler() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const username = localStorage.getItem("username");
-    const isAuth = token && username;
 
-    if (!isAuth && location.pathname !== "/login" && location.pathname !== "/register") {
+    if (!token && location.pathname !== "/login" && location.pathname !== "/register") {
       navigate("/login");
-    } else if (isAuth && (location.pathname === "/login" || location.pathname === "/register")) {
+    } else if (token && (location.pathname === "/login" || location.pathname === "/register")) {
       navigate("/");
     }
   }, [location.pathname, navigate]);

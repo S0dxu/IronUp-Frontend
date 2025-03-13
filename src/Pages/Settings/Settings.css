@@ -23,7 +23,7 @@
     width: 35px;
     height: 35px;
     right: 0px;
-    border-radius: 12px;
+    border-radius: 50%;
     object-fit: cover;
     position: absolute;
     top: 8px;
