@@ -232,7 +232,7 @@ const Ranking: React.FC = () => {
                     })
                 }
             </div>
-            <h4>{(totalDays || 0) - (daysLeft || 0)}/{totalDays || 0} <img src={cale_icon} /></h4>
+            {/* <h4>{(totalDays || 0) - (daysLeft || 0)}/{totalDays || 0} <img src={cale_icon} /></h4> */}
             </>
         ) : (
             <></>
