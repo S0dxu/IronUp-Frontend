@@ -42,9 +42,9 @@ const Ranking: React.FC = () => {
   const getUserData = async () => {
     try {
       setLoading(true);
-      const userResponse = await fetch(`Coinahttps://iron-back.onrender.com/user/${token}`);
+      const userResponse = await fetch(`https://iron-back.onrender.com/user/${token}`);
       const userData = await userResponse.json();
-      const groupResponse = await fetch(`Coinahttps://iron-back.onrender.com/user-group/${userData.username}`);
+      const groupResponse = await fetch(`https://iron-back.onrender.com/user-group/${userData.username}`);
       const groupData = await groupResponse.json();
       if (userResponse.ok && groupResponse.ok) {
         setUsername(userData.username);
@@ -74,7 +74,7 @@ const Ranking: React.FC = () => {
         setMessageC("The challenge must be between 15 and 90 days");
         return;
       }
-      const response = await fetch("Coinahttps://iron-back.onrender.com/create-group", {
+      const response = await fetch("https://iron-back.onrender.com/create-group", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, exercise, days, startingPoint, increment })
@@ -99,7 +99,7 @@ const Ranking: React.FC = () => {
       return;
     }
     try {
-      const response = await fetch("Coinahttps://iron-back.onrender.com/join-group", {
+      const response = await fetch("https://iron-back.onrender.com/join-group", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ groupId: joinInput, username })
@@ -120,7 +120,7 @@ const Ranking: React.FC = () => {
 
   const leaveGroup = async () => {
     try {
-      const response = await fetch("Coinahttps://iron-back.onrender.com/leave-group", {
+      const response = await fetch("https://iron-back.onrender.com/leave-group", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username })
