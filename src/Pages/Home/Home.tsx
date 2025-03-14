@@ -18,7 +18,10 @@ const Home: React.FC = () => {
   const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
   const [today] = useState<number>(new Date().getDate());
   const [taskDone, setTaskDone] = useState<boolean>(false);
+  const [increment, setIncrement] = useState<number>(1);
+  const [startingPoint, setStartingPoint] = useState<number>(1);
   const [username, setUsername] = useState<string>("");
+  const [coin, setCoin] = useState<number>(0);
   const [avatar, setAvatar] = useState<string>("");
   const token: string | null = localStorage.getItem('token');
   /* const highlighted_days: string[] = [
@@ -81,15 +84,43 @@ const Home: React.FC = () => {
     return history.includes(`${day}/${currentMonth + 1}/${currentYear}`);
   };
 
+  useEffect(() => {
+    if (history.includes(`${today}/${currentMonth + 1}/${currentYear}`)){
+      setTaskDone(true);
+    }
+  })
+
+  const todaysTheDay = `${today}/${currentMonth + 1}/${currentYear}`
+
+  const cash = async () => {
+    try {
+      const response = await fetch('Coinahttps://iron-back.onrender.com/cash', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, date: todaysTheDay }),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to cash');
+      }
+      setCoin(data.coin);
+      alert(data.message);
+    } catch (error) {
+      console.error('Error fetching cash:', error);
+      alert('Errore nel richiedere il cash');
+    }
+  }
+
   const claimReward = () => {
-    history.push(`${today}/${currentMonth + 1}/${currentYear}`);
+    cash()
     setTaskDone(true)
     closeTaskDetail();
   }
 
   const tasksData = [
     {
-      title: `${daysDifference} ${groupExercise}`,
+      title: `${daysDifference + (startingPoint|| 0) - 1} ${groupExercise}`,
       reward: 500,
       detail: `Perform ${daysDifference} ${groupExercise} in one set without ever lifting your feet off the ground; you can take your hands off the ground.`
     }/* ,
@@ -133,12 +164,13 @@ const Home: React.FC = () => {
   const getUser = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`https://iron-back.onrender.com/user/${token}`);
+      const response = await fetch(`Coinahttps://iron-back.onrender.com/user/${token}`);
       const data = await response.json();
   
       if (response.ok) {
         setUsername(data.username);
         setAvatar(data.avatar);
+        setCoin(data.coin);
       }
     } catch (error) {
       console.error("Errore nel recupero del gruppo:", error);
@@ -154,28 +186,31 @@ const Home: React.FC = () => {
   const getUserData = async () => {
     try {
         setLoading(true);
-        const userResponse = await fetch(`https://iron-back.onrender.com/user/${token}`);
+        const userResponse = await fetch(`Coinahttps://iron-back.onrender.com/user/${token}`);
         const userData = await userResponse.json();
   
-        const groupResponse = await fetch(`https://iron-back.onrender.com/user-group/${userData.username}`);
+        const groupResponse = await fetch(`Coinahttps://iron-back.onrender.com/user-group/${userData.username}`);
         const groupData = await groupResponse.json();
   
         if (userResponse.ok && groupResponse.ok) {
             setGroupExercise(groupData.exercise);
+            setIncrement(groupData.increment);
+            setStartingPoint(groupData.startingPoint);
             setDaysLeft(groupData.daysLeft);
             setTotalDays(groupData.totals);
-            setHistory(groupData.history);
+            setHistory(groupData.history || []);
         }
-      } catch (error) {
-          console.error("Errore nel recupero dei dati:", error);
-      } finally {
-          setLoading(false);
-      }
-    };
+      } 
+    catch (error) {
+        console.error("Errore nel recupero dei dati:", error);
+    } finally {
+        setLoading(false);
+    }
+  };
         
-      useEffect(() => {
-          getUserData();
-      }, []);
+    useEffect(() => {
+        getUserData();
+    }, []);
 
   if (loading) {
     return <div className="home"></div>;
@@ -188,7 +223,7 @@ const Home: React.FC = () => {
   }) */
 
   const startDaysLeft = (totalDays || 0) - (daysLeft || 0);
-  const sum = (startDaysLeft * (startDaysLeft + 1)) / 2;
+  /* const sum = (startDaysLeft * (startDaysLeft + 1)) / 2; */
 
   return (
     <div className='home'>
@@ -199,48 +234,50 @@ const Home: React.FC = () => {
         alt="Profile"
       />
       <div className="stats">
-        <p><span>💪</span> <span>{sum}</span> <span>Done</span></p>
+        <p><span>💪</span> <span>{taskDone ? ( daysDifference + (startingPoint|| 0) - 1 ) : (0)}</span> <span>Today</span></p>
         <p><span>🕗</span> <span>{daysDifference || 0}/{totalDays || 0}</span> <span>Days</span></p>
-        <p><span>🔥</span> <span>{(totalDays || 0) - (daysLeft || 0)}</span> <span>Streak</span></p>
+        <p><span><img src={coin_icon} /></span> <span>{/* {(totalDays || 0) - (daysLeft || 0)} */} {coin}</span> <span>Points</span></p> {/* 🔥 */}
       </div>
       <div className="tasks">
-        {!taskDone && (<h3>Tasks</h3>)}
-        <ul>
-          {tasksData.map((task, index) => (
-            <li key={index} onClick={() => handleTaskClick(index)}>
-              {!taskDone && (
-                <div className="task-summary">
-                  <img src={fire_icon} alt="task icon" />
-                  <h4>
-                    Do {task.title} - {task.reward} <img src={coin_icon} alt="coin" />
-                  </h4>
-                  <img className='arr' src={dx_arr} alt="arrow" />
-                </div>
-              )}
-              {taskDone && (
-                <div className={`task-summary goaway-animation`}>
-                  <img src={fire_icon} alt="task icon" />
-                  <h4>
-                    Completed: {task.title} - {task.reward} <img src={coin_icon} alt="coin" />
-                  </h4>
-                </div>
-              )}
-              {openTaskIndex === index && (
-                <div className={`task-detail ${detailAnimation}`} ref={detailRef} onAnimationEnd={handleAnimationEnd}>
-                  <button className="close-btn" onClick={closeTaskDetail}>
-                    <img src={close_icon} />
-                  </button>
-                  <img src={fire_icon} className="firebtn" />
-                  <h4>{task.title}</h4>
-                  <p>{task.detail}</p>
-                  <button className="doit"  onClick={claimReward}>
-                    Claim your Reward of {task.reward} <img src={coin_icon} alt="coin" />
-                  </button>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
+        {!taskDone && groupExercise && <h3>Tasks</h3>}
+        {groupExercise && (
+          <ul>
+            {tasksData.map((task, index) => (
+              <li key={index} onClick={() => handleTaskClick(index)}>
+                {!taskDone && (
+                  <div className="task-summary">
+                    <img src={fire_icon} alt="task icon" />
+                    <h4>
+                      Do {task.title} - {task.reward} <img src={coin_icon} alt="coin" />
+                    </h4>
+                    <img className='arr' src={dx_arr} alt="arrow" />
+                  </div>
+                )}
+                {taskDone && (
+                  <div className={`task-summary goaway-animation`}>
+                    <img src={fire_icon} alt="task icon" />
+                    <h4>
+                      Completed: {task.title} - {task.reward} <img src={coin_icon} alt="coin" />
+                    </h4>
+                  </div>
+                )}
+                {openTaskIndex === index && (
+                  <div className={`task-detail ${detailAnimation}`} ref={detailRef} onAnimationEnd={handleAnimationEnd}>
+                    <button className="close-btn" onClick={closeTaskDetail}>
+                      <img src={close_icon} />
+                    </button>
+                    <img src={fire_icon} className="firebtn" />
+                    <h4>{task.title}</h4>
+                    <p>{task.detail}</p>
+                    <button className="doit" onClick={claimReward}>
+                      Claim your Reward of {task.reward} <img src={coin_icon} alt="coin" />
+                    </button>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div className="calend">
         <h3>Calendar</h3>

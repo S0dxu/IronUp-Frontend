@@ -109,6 +109,10 @@
     animation: goaway 1s forwards;
 }
 
+.stats img {
+    width: 30px;
+}
+
 @keyframes goaway {
     0% {
         transform: translateX(0);
@@ -118,6 +122,7 @@
     }
     100% {
         transform: translateX(100%);
+        display: none;
     }
 }
 

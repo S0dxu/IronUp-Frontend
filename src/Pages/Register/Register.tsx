@@ -24,7 +24,7 @@ const Register: React.FC = () => {
         setMessage(null);
 
         try {
-            const response = await fetch("https://iron-back.onrender.com/register", {
+            const response = await fetch("Coinahttps://iron-back.onrender.com/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password, avatar })

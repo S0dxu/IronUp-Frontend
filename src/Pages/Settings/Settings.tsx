@@ -19,7 +19,7 @@ const Settings: React.FC = () => {
     const getUser = async () => {
         try {
           setLoading(true);
-          const response = await fetch(`https://iron-back.onrender.com/user/${token}`);
+          const response = await fetch(`Coinahttps://iron-back.onrender.com/user/${token}`);
           const data = await response.json();
       
           if (response.ok) {
