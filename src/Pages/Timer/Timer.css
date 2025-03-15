@@ -74,6 +74,7 @@
         justify-content: center;
         gap: 2px;
         top: 40px;
+        z-index: -1;
         width: calc(100% - 140px);
     }
 
