@@ -151,11 +151,7 @@ const Home: React.FC = () => {
 
   const getUser = async () => {
     try {
-<<<<<<< HEAD
       setLoadingUser(true);
-=======
-      setLoading(true);
->>>>>>> 820813d0f9d39bf8a355232a112244bbb8bcba11
       const response = await fetch(`https://iron-back.onrender.com/user/${token}`);
       const data = await response.json();
       if (response.ok) {
@@ -182,7 +178,6 @@ const Home: React.FC = () => {
   
   const getUserData = async () => {
     try {
-<<<<<<< HEAD
       setLoadingGroup(true);
       const userResponse = await fetch(`https://iron-back.onrender.com/user/${token}`);
       const userData = await userResponse.json();
@@ -198,26 +193,6 @@ const Home: React.FC = () => {
       }
     } catch (error) {
       console.error("Error fetching group data:", error);
-=======
-        setLoading(true);
-        const userResponse = await fetch(`https://iron-back.onrender.com/user/${token}`);
-        const userData = await userResponse.json();
-  
-        const groupResponse = await fetch(`https://iron-back.onrender.com/user-group/${userData.username}`);
-        const groupData = await groupResponse.json();
-  
-        if (userResponse.ok && groupResponse.ok) {
-            setGroupExercise(groupData.exercise);
-            setIncrement(groupData.increment);
-            setStartingPoint(groupData.startingPoint);
-            setDaysLeft(groupData.daysLeft);
-            setTotalDays(groupData.totals);
-            setHistory(groupData.history || []);
-        }
-      } 
-    catch (error) {
-        console.error("Errore nel recupero dei dati:", error);
->>>>>>> 820813d0f9d39bf8a355232a112244bbb8bcba11
     } finally {
       setTimeout(() => {
         setLoadingGroup(false);

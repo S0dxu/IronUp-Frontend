@@ -23,7 +23,6 @@ const Settings: React.FC = () => {
 
     const getUser = async () => {
         try {
-<<<<<<< HEAD
             setLoading(true);
             const response = await fetch(`https://iron-back.onrender.com/user/${token}`);
             const data = await response.json();
@@ -31,16 +30,6 @@ const Settings: React.FC = () => {
                 setUsername(data.username);
                 setAvatar(data.avatar);
             }
-=======
-          setLoading(true);
-          const response = await fetch(`https://iron-back.onrender.com/user/${token}`);
-          const data = await response.json();
-      
-          if (response.ok) {
-            setUsername(data.username);
-            setAvatar(data.avatar);
-          }
->>>>>>> 820813d0f9d39bf8a355232a112244bbb8bcba11
         } catch (error) {
             console.error("error:", error);
         } finally {
