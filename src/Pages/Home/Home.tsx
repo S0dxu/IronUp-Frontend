@@ -110,15 +110,15 @@ const Home: React.FC = () => {
   const claimReward = () => {
     cash();
     closeTaskDetail();
-    setTimeout(() => {
+    /* setTimeout(() => { */
       setToAnimation(true);
-      setTimeout(() => {
+      /* setTimeout(() => { */
         setToAnimation(false);
-      }, 0);
-    }, 0)
-    setTimeout(() => {
+      /* }, 0);
+    }, 0) */
+    /* setTimeout(() => { */
       setTaskDone(true);
-    }, 0);
+    /* }, 0); */
   };
 
   const tasksData = [
@@ -162,9 +162,9 @@ const Home: React.FC = () => {
     } catch (error) {
       console.error("Error fetching user:", error);
     } finally {
-      setTimeout(() => {
+      /* setTimeout(() => { */
         setLoadingUser(false);
-      }, 0);
+      /* }, 0); */
     }
   };
 
@@ -194,9 +194,9 @@ const Home: React.FC = () => {
     } catch (error) {
       console.error("Error fetching group data:", error);
     } finally {
-      setTimeout(() => {
+      /* setTimeout(() => { */
         setLoadingGroup(false);
-      }, 0);
+      /* }, 0); */
     }
   };
 
