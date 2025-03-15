@@ -135,7 +135,7 @@ const Ranking: React.FC = () => {
       const response = await fetch("https://iron-back.onrender.com/leave-group", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username })
+        body: JSON.stringify({ token }) //user name
       });
       const data = await response.json();
       if (response.ok) {
