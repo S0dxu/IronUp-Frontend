@@ -114,18 +114,18 @@ const Home: React.FC = () => {
       setToAnimation(true);
       setTimeout(() => {
         setToAnimation(false);
-      }, 300);
-    }, 300)
+      }, 0);
+    }, 0)
     setTimeout(() => {
       setTaskDone(true);
-    }, 600);
+    }, 0);
   };
 
   const tasksData = [
     {
       title: `${(daysDifference * increment) - increment + startingPoint} ${groupExercise}`,
       reward: 500,
-      detail: `Perform ${(daysDifference * increment) - increment + startingPoint} ${groupExercise} in one set without ever lifting your feet off the ground; you can take your hands off the ground.`
+      detail: `Perform ${(daysDifference * increment) - increment + startingPoint} ${groupExercise} in one set. If you need, you can only remove one hand at a time.`
     }
   ];
 
@@ -164,7 +164,7 @@ const Home: React.FC = () => {
     } finally {
       setTimeout(() => {
         setLoadingUser(false);
-      }, 600);
+      }, 0);
     }
   };
 
@@ -196,7 +196,7 @@ const Home: React.FC = () => {
     } finally {
       setTimeout(() => {
         setLoadingGroup(false);
-      }, 1600);
+      }, 0);
     }
   };
 
