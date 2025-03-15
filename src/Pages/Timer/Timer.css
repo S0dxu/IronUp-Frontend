@@ -48,6 +48,36 @@
         background-color: #cee9e0;
     }
 
+    .timer .timer-det {
+        width: calc(100dvw - 40px);
+    }
+
+    .timer .timer-det h4 {
+        top: -10px;
+        position: relative;
+    }
+
+    .time-inputs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .time-inputs input {
+        padding: 0;
+        height: 20px;
+        width: 30px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        font-family: "Raleway";
+        font-size: 18px;
+    }
+
+    .timer .timer-det .doit {
+        width: calc(100% - 40px);
+    }
+
     .timer .switch {
         position: absolute;
         top: 30px;
@@ -71,6 +101,10 @@
 
     .player img {
         width: 24px;
+    }
+
+    .player img:nth-child(3) {
+        width: 21px;
     }
 }
 

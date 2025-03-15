@@ -28,6 +28,10 @@
     margin-top: 20px;
 }
 
+.home .goaway-now {
+    display: none;
+}
+
 .home .stats p {
     display: flex;
     flex-direction: column;
@@ -106,7 +110,7 @@
 }
 
 .goaway-animation {
-    animation: goaway 1s forwards;
+    animation: goaway .6s ease forwards;
 }
 
 .stats img {
@@ -129,6 +133,10 @@
 .calendar-day:hover {
     cursor: pointer;
     background-color: #e0e0e0;
+}
+
+.home .idunno {
+    width: 20px;
 }
 
 .challe,
@@ -170,7 +178,7 @@
     align-items: center;
 }
 
-.tasks .task-detail {
+.task-detail {
     background: #f9f9f9;
     position: fixed;
     width: calc(100% - 12px);
@@ -231,7 +239,7 @@
 }
   
 
-.tasks .task-detail .doit {
+.task-detail .doit {
     width: calc(100% - 10px);
     display: flex;
     align-items: center;
@@ -248,19 +256,19 @@
     bottom: 5px;
 }
 
-.tasks .task-detail h4 {
+.task-detail h4 {
     font-size: 18px;
     font-weight: 500;
     margin-top: 5px;
 }
 
-.tasks .task-detail p {
+.task-detail p {
     font-size: 15px;
     font-weight: 400;
     padding: 10px;
 }
 
-.tasks .task-detail .close-btn {
+.task-detail .close-btn {
     position: absolute;
     top: 15px;
     right: 10px;
@@ -269,13 +277,13 @@
     border: transparent;
 }
 
-.tasks .task-detail .close-btn img {
+.task-detail .close-btn img {
     width: 12px;
     height: 12px;
     object-fit: cover;
 }
 
-.tasks .task-detail .firebtn {
+.task-detail .firebtn {
     position: absolute;
     top: 10px;
     left: 5px;
@@ -288,7 +296,7 @@
 }
 
 
-.tasks .dail {
+.dail {
     background-color: #cee9e0;
 }
 

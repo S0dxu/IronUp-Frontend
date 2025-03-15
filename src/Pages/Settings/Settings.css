@@ -61,3 +61,147 @@
     background-color: rgb(255, 255, 255);
     margin: 0;
 }
+
+.popup-content.animate-down {
+    animation-name: moveDown;
+}
+
+.popup-content.animate-up {
+    animation-name: moveUp;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    z-index: 1000;
+}
+
+@keyframes moveUp {
+    from {
+        transform: translateX(-50%) translateY(0);
+    }
+    to {
+        transform: translateX(-50%) translateY(100%);
+    }
+}
+
+@keyframes moveDown {
+    from {
+        transform: translateX(-50%) translateY(100%);
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.popup-content {
+    background: white;
+    width: 100%;
+    bottom: 0;
+    height: 200px;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 0 10px 10px #dadada4d;
+    text-align: center;
+    position: relative;
+    transform: translateX(-50%) translateY(0);
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+}
+
+.popup-content input {
+    font-family: "Raleway";
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    border: 1px solid #cee9e08e;
+    outline: none;
+}
+
+.popup-content h3 {
+    margin: 10px;
+    font-weight: 500;
+}
+
+.popup-content input {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.popup-content button {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    opacity: 0.8;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+.settings .error {
+    margin: 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.delete-confirm-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    z-index: 99;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+}
+
+.delete-confirm-popup button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 12px;
+    background-color: #e60000;
+    color: white;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    font-family: "Raleway";
+    font-weight: 600;
+    margin-top: 50px;
+}
+
+.settings .cancel {
+    background-color: #eee;
+    color: black;
+    margin: 0;
+}

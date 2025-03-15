@@ -16,7 +16,7 @@ const Login: React.FC = () => {
     setMessage(null);
 
     try {
-      const response = await fetch("Coinahttps://iron-back.onrender.com/login", {
+      const response = await fetch("https://iron-back.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ identifier, password })

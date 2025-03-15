@@ -7,6 +7,7 @@ import crown2_icon from './../../assets/2385856.png';
 import cale_icon from './../../assets/calendar-249.png';
 import dx_arr from './../../assets/arrow-next-svgrepo-com.svg';
 import close_icon from './../../assets/75519.png';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Ranking: React.FC = () => {
   const token: string | null = localStorage.getItem('token');
@@ -42,9 +43,9 @@ const Ranking: React.FC = () => {
   const getUserData = async () => {
     try {
       setLoading(true);
-      const userResponse = await fetch(`Coinahttps://iron-back.onrender.com/user/${token}`);
+      const userResponse = await fetch(`https://iron-back.onrender.com/user/${token}`);
       const userData = await userResponse.json();
-      const groupResponse = await fetch(`Coinahttps://iron-back.onrender.com/user-group/${userData.username}`);
+      const groupResponse = await fetch(`https://iron-back.onrender.com/user-group/${userData.username}`);
       const groupData = await groupResponse.json();
       if (userResponse.ok && groupResponse.ok) {
         setUsername(userData.username);
@@ -64,9 +65,20 @@ const Ranking: React.FC = () => {
     }
   };
 
+  const formatPoints = (num: number) => {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+    }
+    return num.toString();
+  };
+
   useEffect(() => {
     getUserData();
   }, []);
+
+  const navigate = useNavigate()
 
   const createGroup = async () => {
     try {
@@ -74,7 +86,7 @@ const Ranking: React.FC = () => {
         setMessageC("The challenge must be between 15 and 90 days");
         return;
       }
-      const response = await fetch("Coinahttps://iron-back.onrender.com/create-group", {
+      const response = await fetch("https://iron-back.onrender.com/create-group", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, exercise, days, startingPoint, increment })
@@ -99,7 +111,7 @@ const Ranking: React.FC = () => {
       return;
     }
     try {
-      const response = await fetch("Coinahttps://iron-back.onrender.com/join-group", {
+      const response = await fetch("https://iron-back.onrender.com/join-group", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ groupId: joinInput, username })
@@ -120,7 +132,7 @@ const Ranking: React.FC = () => {
 
   const leaveGroup = async () => {
     try {
-      const response = await fetch("Coinahttps://iron-back.onrender.com/leave-group", {
+      const response = await fetch("https://iron-back.onrender.com/leave-group", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username })
@@ -132,7 +144,7 @@ const Ranking: React.FC = () => {
         setGroupExercise('');
         setJoinInput('');
         toggleHidden();
-        window.location.reload();
+        navigate("/")
       } else {
         alert(data.message);
       }
@@ -267,7 +279,7 @@ const Ranking: React.FC = () => {
                     <p>{member.username}</p>
                   </div>
                   <span>
-                    {member.coin} <img src={coin_icon} alt="coin" />
+                    {formatPoints(member.coin)} <img src={coin_icon} alt="coin" />
                   </span>
                 </li>
               ))}
