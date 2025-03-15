@@ -171,11 +171,11 @@
 .tasks div {
     display: flex;
     gap: 10px;
-    border: 1px solid #cee9e0;
     border-radius: 12px;
     padding: 5px;
     height: 22px;
     align-items: center;
+    border: 1px solid #cee9e0;
 }
 
 .task-detail {
@@ -210,6 +210,18 @@
     left: 50%;
     transform: translateX(-50%);
     box-shadow: 0 0 10px 10px #dadada4d;
+}
+
+.nosomp {
+    width: calc(100dvw - 10px) !important;
+    border: none !important;
+    position: fixed !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.home .task-detail h4 {
+    top: 5px;
+    position: relative;
 }
   
 .task-detail.enter {
@@ -254,6 +266,10 @@
     cursor: pointer;
     position: absolute;
     bottom: 5px;
+}
+
+.home .task-detail .doit {
+    width: calc(100% - 40px);
 }
 
 .task-detail h4 {

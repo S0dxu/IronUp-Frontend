@@ -171,7 +171,13 @@ const Timer: React.FC = () => {
             <img src={close_icon} alt="close" />
           </button>
           <h4>Set Timer</h4>
-          
+          <ul>
+            <p>H</p>
+            <p>/</p>
+            <p>M</p>
+            <p>/</p>
+            <p>S</p>
+          </ul>
           <div className="time-inputs">
             <input
               type="number"
