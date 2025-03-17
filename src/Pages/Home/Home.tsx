@@ -28,7 +28,7 @@ const Home: React.FC = () => {
   const token: string | null = localStorage.getItem('token');
   const [groupExercise, setGroupExercise] = useState<string>('');
   const [daysLeft, setDaysLeft] = useState<number>();
-  let [totalDays, setTotalDays] = useState<number>();
+  const [totalDays, setTotalDays] = useState<number>();
   const [history, setHistory] = useState<string[]>([]);
   const daysDifference = (totalDays || 0) - (daysLeft || 0);
   const [openTaskIndex, setOpenTaskIndex] = useState<number | null>(null);
@@ -82,7 +82,7 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    if (history.includes(`${today}/${currentMonth + 1}/${currentYear}`)){
+    if (history.includes(`${today}/${currentMonth + 1}/${currentYear}`)) {
       setTaskDone(true);
     }
   }, [history, today, currentMonth, currentYear]);
@@ -110,22 +110,39 @@ const Home: React.FC = () => {
   const claimReward = () => {
     cash();
     closeTaskDetail();
-    /* setTimeout(() => { */
-      setToAnimation(true);
-      /* setTimeout(() => { */
-        setToAnimation(false);
-      /* }, 0);
-    }, 0) */
-    /* setTimeout(() => { */
-      setTaskDone(true);
-    /* }, 0); */
+    setToAnimation(true);
+    setToAnimation(false);
+    setTaskDone(true);
   };
+
+  const calculateExerciseCount = () => {
+    if (history.length === 0) {
+      return startingPoint;
+    }
+    const sortedHistory = history.slice().sort((a, b) => {
+      const [dA, mA, yA] = a.split('/').map(Number);
+      const [dB, mB, yB] = b.split('/').map(Number);
+      return new Date(yA, mA - 1, dA).getTime() - new Date(yB, mB - 1, dB).getTime();
+    });
+    const lastClaim = sortedHistory[sortedHistory.length - 1];
+    const [lastDay, lastMonth, lastYear] = lastClaim.split('/').map(Number);
+    const lastDate = new Date(lastYear, lastMonth - 1, lastDay);
+    const todayDate = new Date();
+    const diffDays = (todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24);
+    if (diffDays >= 1 && diffDays < 2) {
+      return startingPoint + (history.length * increment);
+    } else {
+      return startingPoint + ((history.length - 1) * increment);
+    }
+  };
+
+  const exerciseCount = calculateExerciseCount();
 
   const tasksData = [
     {
-      title: `${(daysDifference * increment) - increment + startingPoint} ${groupExercise}`,
+      title: `${exerciseCount} ${groupExercise}`,
       reward: 500,
-      detail: `Perform ${(daysDifference * increment) - increment + startingPoint} ${groupExercise} in one set. If you need, you can only remove one hand at a time.`
+      detail: `Perform ${exerciseCount} ${groupExercise} in one set. If needed, you can remove one hand at a time.`
     }
   ];
 
@@ -162,9 +179,7 @@ const Home: React.FC = () => {
     } catch (error) {
       console.error("Error fetching user:", error);
     } finally {
-      /* setTimeout(() => { */
-        setLoadingUser(false);
-      /* }, 0); */
+      setLoadingUser(false);
     }
   };
 
@@ -175,7 +190,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     setIsCompleted(daysDifference === totalDays);
   }, [daysDifference, totalDays]);
-  
+
   const getUserData = async () => {
     try {
       setLoadingGroup(true);
@@ -194,9 +209,7 @@ const Home: React.FC = () => {
     } catch (error) {
       console.error("Error fetching group data:", error);
     } finally {
-      /* setTimeout(() => { */
-        setLoadingGroup(false);
-      /* }, 0); */
+      setLoadingGroup(false);
     }
   };
 
@@ -208,8 +221,6 @@ const Home: React.FC = () => {
   if (loading) {
     return <div className="home"></div>;
   }
-
-  const startDaysLeft = (totalDays || 0) - (daysLeft || 0);
 
   const formatPoints = (num: number) => {
     if (num >= 1000000) {
@@ -226,15 +237,13 @@ const Home: React.FC = () => {
       <img src={avatar} className='profile-pic' alt="Profile" />
       <div className="stats">
         {!isCompleted && (
-        <>
           <p>
             <span>
               <img src={taskDone ? tick_icon : cross_icon} className='idunno' alt="status" />
             </span>
-            <span>{taskDone ? (daysDifference + (startingPoint || 0) - 1) : 0}</span>
+            <span>{/* taskDone ? (daysDifference + (startingPoint || 0) - 1) : 0 */ exerciseCount}</span>
             <span>Today</span>
           </p>
-        </>
         )}
         <p>
           <span>🕗</span>
@@ -265,7 +274,7 @@ const Home: React.FC = () => {
                   </div>
                 )}
                 {taskDone && (
-                  <div className={`task-summary ${taskDone && ("goaway-now")} ${toAnimation && ("goaway-animation")}`}>
+                  <div className={`task-summary ${taskDone ? "goaway-now" : ""} ${toAnimation ? "goaway-animation" : ""}`}>
                     <img src={fire_icon} alt="task icon" />
                     <h4>
                       Completed: {task.title} - {task.reward} <img src={coin_icon} alt="coin" />
