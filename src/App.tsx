@@ -13,6 +13,10 @@ import Register from './Pages/Register/Register';
 const App: React.FC = () => {
   return (
     <Router>
+      <div className="wtchfrmpc">
+        <img src="https://i.pinimg.com/originals/70/7c/39/707c39bfff546612b5b4604fe86cda32.gif" />
+        <h1>For a better and complete experience, please view this page on a mobile device.</h1>
+      </div>
       <AuthHandler />
       <Header />
       <Navbar />

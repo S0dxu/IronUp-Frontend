@@ -41,3 +41,32 @@
   color: #888;
 }
  */
+
+.wtchfrmpc {
+  display: flex;
+  inset: 0;
+  position: fixed;
+  background-color: #15bcc2;
+}
+
+.wtchfrmpc img {
+  width: 50%;
+  margin: auto auto;
+  height: 50%;
+  object-fit: cover;
+}
+
+.wtchfrmpc h1 {
+  position: absolute;
+  top: 40px;
+  text-align: center;
+  left: 50%;
+  color: #ffffff;
+  transform: translatex(-50%);
+}
+
+ @media (max-width: 700px) {
+  .wtchfrmpc {
+    display: none;
+  }
+}
