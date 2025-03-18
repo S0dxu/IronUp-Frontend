@@ -22,6 +22,24 @@ const Timer: React.FC = () => {
   const [seconds, setSeconds] = useState<number>(10);
   const detailRef = useRef<HTMLDivElement>(null);
   const [initialTime, setInitialTime] = useState<number>(10);
+  
+  useEffect(() => {
+    let wakeLock: any = null;
+    async function requestWakeLock() {
+      if ('wakeLock' in navigator) {
+        try {
+          wakeLock = await (navigator as any).wakeLock.request('screen');
+        } catch (err) {}
+      }
+    }
+    requestWakeLock();
+    return () => {
+      if (wakeLock) {
+        wakeLock.release();
+        wakeLock = null;
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (!isRunning) return;
