@@ -1,6 +1,7 @@
 .register {
     height: 100dvh;
     width: 100dvw;
+    max-width: 600px;
     z-index: 101;
     position: fixed;
     top: 0;
@@ -69,7 +70,8 @@
     border-radius: 5px;
     margin-bottom: 10px;
     background: #ffa401;
-    width: calc(100vw - 40px);
+    width: calc(100dvw - 40px);
+    max-width: 600px;
     outline: none;
     font-family: "Raleway";
     font-size: 16px;
