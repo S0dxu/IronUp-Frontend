@@ -21,6 +21,8 @@
 .register img {
     width: 80px;
     margin-bottom: 40px;
+    max-width: 100px;
+    max-height: 100px;
 }
 
 .register a {
@@ -35,6 +37,10 @@
 .register .form-group input {
     padding: 12px 10px;
     border: none;
+    max-width: 380px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     border-radius: 5px;
     margin-bottom: 10px;
     border: 1px solid #dbdbdb;
@@ -65,6 +71,10 @@
 
 .register button {
     padding: 12px 10px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 400px;
     border: none;
     border-radius: 5px;
     margin-bottom: 10px;
