@@ -91,7 +91,7 @@ const Home: React.FC = () => {
 
   const cash = async () => {
     try {
-      const response = await fetch('https://iron-back.onrender.com/cash', {
+      const response = await fetch('https://ironup-backend.vercel.app/cash', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, date: todaysTheDay }),
@@ -169,7 +169,7 @@ const Home: React.FC = () => {
   const getUser = async () => {
     try {
       setLoadingUser(true);
-      const response = await fetch(`https://iron-back.onrender.com/user/${token}`);
+      const response = await fetch(`https://ironup-backend.vercel.app/user/${token}`);
       const data = await response.json();
       if (response.ok) {
         setUsername(data.username);
@@ -194,9 +194,9 @@ const Home: React.FC = () => {
   const getUserData = async () => {
     try {
       setLoadingGroup(true);
-      const userResponse = await fetch(`https://iron-back.onrender.com/user/${token}`);
+      const userResponse = await fetch(`https://ironup-backend.vercel.app/user/${token}`);
       const userData = await userResponse.json();
-      const groupResponse = await fetch(`https://iron-back.onrender.com/user-group/${userData.username}`);
+      const groupResponse = await fetch(`https://ironup-backend.vercel.app/user-group/${userData.username}`);
       const groupData = await groupResponse.json();
       if (userResponse.ok && groupResponse.ok) {
         setGroupExercise(groupData.exercise);

@@ -24,7 +24,7 @@ const Register: React.FC = () => {
         setMessage(null);
 
         try {
-            const response = await fetch("https://iron-back.onrender.com/register", {
+            const response = await fetch("https://ironup-backend.vercel.app/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password, avatar })

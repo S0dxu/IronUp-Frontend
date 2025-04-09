@@ -24,7 +24,7 @@ const Settings: React.FC = () => {
     const getUser = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`https://iron-back.onrender.com/user/${token}`);
+            const response = await fetch(`https://ironup-backend.vercel.app/user/${token}`);
             const data = await response.json();
             if (response.ok) {
                 setUsername(data.username);
@@ -102,7 +102,7 @@ const Settings: React.FC = () => {
               return;
           }
   
-          const response = await fetch(`https://iron-back.onrender.com/change-picture?token=${token}&link=${link}`, {
+          const response = await fetch(`https://ironup-backend.vercel.app/change-picture?token=${token}&link=${link}`, {
               method: 'GET',
           });
   
@@ -128,7 +128,7 @@ const Settings: React.FC = () => {
             return;
         }
 
-        const response = await fetch(`https://iron-back.onrender.com/delete-account?token=${token}`, {
+        const response = await fetch(`https://ironup-backend.vercel.app/delete-account?token=${token}`, {
             method: 'DELETE',
         });
 
