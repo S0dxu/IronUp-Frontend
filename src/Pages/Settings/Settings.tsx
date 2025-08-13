@@ -14,7 +14,7 @@ const Settings: React.FC = () => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    const allowedTypes: string[] = ["image/png", "image/jpeg", "image/jpg"];
+    const allowedTypes: string[] = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
 
     const logout = () => {
         localStorage.removeItem('token');
@@ -66,7 +66,7 @@ const Settings: React.FC = () => {
             setError("");
         } else {
             setFile(null);
-            setError("Format not supported. Use PNG, JPG or JPEG.");
+            setError("Format not supported. Use PNG, JPG, GIF or JPEG.");
             setLoading(false);
         }
     };
@@ -168,7 +168,7 @@ const Settings: React.FC = () => {
                     ref={fileInputRef}
                     style={{ display: 'none' }}
                     onChange={handleFileSelect}
-                    accept="image/png, image/jpeg, image/jpg"
+                    accept="image/png, image/jpeg, image/jpg, image/gif"
                 />
                 <p onClick={logout}>Log Out <img src={dx_arr} /></p>
             </li>
